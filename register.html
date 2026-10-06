@@ -1,0 +1,73 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width,initial-scale=1.0">
+<title>ECam — Register</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="style.css">
+</head>
+<body class="login-page">
+<div class="login-background"><div class="glow glow-one"></div><div class="glow glow-two"></div></div>
+<main class="login-shell">
+  <section class="login-brand">
+    <div class="brand-icon">E</div>
+    <h1>ECam</h1>
+    <p>Capture more. Create better.</p>
+  </section>
+  <section class="login-card">
+    <div class="camera-symbol">+</div>
+    <h2>Create your account</h2>
+    <p class="login-subtitle">Save and access your ECam pictures anytime.</p>
+    <form id="registerForm">
+      <label for="fullName">Full Name</label>
+      <input id="fullName" type="text" placeholder="Enter your full name" required>
+      <label for="username">Username</label>
+      <input id="username" type="text" placeholder="Choose a username" minlength="3" required>
+      <label for="gmail">Gmail</label>
+      <input id="gmail" type="email" placeholder="you@gmail.com" required>
+      <label for="password">Password</label>
+      <div class="password-wrap">
+        <input id="password" type="password" placeholder="Create a password" minlength="6" required>
+        <button type="button" id="togglePassword">Show</button>
+      </div>
+      <label for="confirmPassword">Confirm Password</label>
+      <input id="confirmPassword" type="password" placeholder="Repeat your password" minlength="6" required>
+      <button class="login-button" type="submit">Create Account <span>→</span></button>
+      <p id="registerMessage" class="login-message"></p>
+    </form>
+    <div class="back-login"><span>Already have an account?</span><a href="index.html">Log in</a></div>
+  </section>
+  <footer>ECam Camera Studio</footer>
+</main>
+<script>
+const form=document.getElementById("registerForm");
+const msg=document.getElementById("registerMessage");
+const pass=document.getElementById("password");
+document.getElementById("togglePassword").onclick=()=>{
+  pass.type=pass.type==="text"?"password":"text";
+  document.getElementById("togglePassword").textContent=pass.type==="text"?"Hide":"Show";
+};
+form.onsubmit=e=>{
+  e.preventDefault();
+  const fullName=document.getElementById("fullName").value.trim();
+  const username=document.getElementById("username").value.trim().toLowerCase();
+  const gmail=document.getElementById("gmail").value.trim().toLowerCase();
+  const password=pass.value;
+  const confirm=document.getElementById("confirmPassword").value;
+  if(password!==confirm){msg.textContent="Passwords do not match.";msg.className="login-message error";return;}
+  if(!gmail.endsWith("@gmail.com")){msg.textContent="Please use a Gmail address.";msg.className="login-message error";return;}
+  const users=JSON.parse(localStorage.getItem("ecamUsers")||"[]");
+  if(users.some(u=>u.username===username)){msg.textContent="Username is already registered.";msg.className="login-message error";return;}
+  if(users.some(u=>u.gmail===gmail)){msg.textContent="This Gmail is already registered.";msg.className="login-message error";return;}
+  users.push({fullName,username,gmail,password,createdAt:new Date().toISOString()});
+  localStorage.setItem("ecamUsers",JSON.stringify(users));
+  msg.textContent="Account created. Redirecting to login...";
+  msg.className="login-message success";
+  setTimeout(()=>location.href="index.html",900);
+};
+</script>
+</body>
+</html>

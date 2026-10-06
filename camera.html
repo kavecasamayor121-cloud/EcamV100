@@ -1,0 +1,123 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>ECam — Camera</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="style.css">
+</head>
+<body>
+  <div class="app">
+    <header class="topbar">
+      <div class="brand">
+        <div class="brand-icon">E</div>
+        <div>
+          <h1>ECam</h1>
+          <span>Capture more. Create better.</span>
+        </div>
+      </div>
+      <div class="header-actions">
+        <button id="historyButton" class="history-button">Picture History</button>
+        <div class="status">
+          <span id="statusDot"></span>
+          <span id="statusText">Camera not started</span>
+        </div>
+        <button id="logoutButton" class="logout-button">Log out</button>
+      </div>
+    </header>
+
+    <main class="workspace">
+      <section class="camera-panel">
+        <div class="preview-wrap">
+          <video id="video" autoplay playsinline muted></video>
+          <canvas id="canvas"></canvas>
+          <div class="preview-overlay">
+            <div class="quality-badge" id="qualityBadge">ECam Quality</div>
+            <div class="zoom-badge" id="zoomBadge">1×</div>
+          </div>
+          <div class="grid-overlay" id="gridOverlay"></div>
+          <div class="date-overlay" id="dateOverlay"></div>
+        </div>
+
+        <div class="camera-controls">
+          <button class="round-control" id="galleryBtn" title="Open captured photos">▣</button>
+          <div class="mode-switch">
+            <button class="mode active" data-mode="photo">PHOTO</button>
+            <button class="mode" data-mode="video">VIDEO</button>
+          </div>
+          <button class="shutter" id="captureBtn" aria-label="Take picture"><span></span></button>
+          <button class="round-control" id="flipBtn" title="Switch camera">↻</button>
+        </div>
+        <p class="capture-hint">Every photo is automatically saved as <b>ECam Picture 001.jpg</b></p>
+      </section>
+
+      <aside class="settings">
+        <section class="card">
+          <h2>Quality</h2>
+          <div class="option-grid three">
+            <button class="quality active" data-quality="iphone"><strong>iPhone 18</strong><small>Maximum</small></button>
+            <button class="quality" data-quality="original"><strong>Original</strong><small>Natural</small></button>
+            <button class="quality" data-quality="cinematic"><strong>Cinematic</strong><small>Film look</small></button>
+          </div>
+          <p class="note">The Ecam preset enhances the available camera feed; actual resolution depends on your device camera.</p>
+        </section>
+
+        <section class="card">
+          <h2>Style</h2>
+          <div class="style-list">
+            <button class="style active" data-filter="original"><span class="style-preview original-preview"></span><span>Original</span></button>
+            <button class="style" data-filter="cinematic"><span class="style-preview cinematic-preview"></span><span>Cinematic</span></button>
+            <button class="style" data-filter="vivid"><span class="style-preview vivid-preview"></span><span>Vivid</span></button>
+            <button class="style" data-filter="natural"><span class="style-preview natural-preview"></span><span>Natural</span></button>
+          </div>
+        </section>
+
+        <section class="card">
+          <h2>Retro Cam</h2>
+          <div class="retro-grid">
+            <button class="retro" data-retro="80s"><b>80s</b><small>VHS</small></button>
+            <button class="retro" data-retro="90s"><b>90s</b><small>Film</small></button>
+            <button class="retro" data-retro="kapi"><b>Kapi Cam</b><small>Vintage</small></button>
+            <button class="retro active" data-retro="none"><b>Off</b><small>Clean</small></button>
+          </div>
+        </section>
+
+        <section class="card">
+          <h2>Camera</h2>
+          <div class="setting-row"><label>Zoom</label><output id="zoomValue">1.0×</output></div>
+          <input id="zoom" type="range" min="1" max="3" step="0.1" value="1">
+          <div class="quick-settings">
+            <button id="gridBtn">Grid <span>OFF</span></button>
+            <button id="dateBtn">Date <span>OFF</span></button>
+            <button id="mirrorBtn">Mirror <span>OFF</span></button>
+          </div>
+        </section>
+
+        <section class="card gallery-card" id="quickGalleryCard">
+          <div class="gallery-head"><h2>Recent Pictures</h2><button id="historyButton2">View All</button></div>
+          <div id="gallery" class="gallery"><div class="empty">Your captured photos appear here.</div></div>
+        </section>
+      </aside>
+    </main>
+  </div>
+
+  <div class="history-modal" id="historyModal">
+    <div class="history-box">
+      <div class="history-header">
+        <div>
+          <h2>Picture History</h2>
+          <p>Your saved ECam pictures</p>
+        </div>
+        <button id="closeHistory" class="close-history">×</button>
+      </div>
+      <div id="historyGrid" class="history-grid"></div>
+      <div id="historyEmpty" class="history-empty">No saved pictures yet.</div>
+    </div>
+  </div>
+  </div>
+  <script src="script.js"></script>
+</body>
+</html>
